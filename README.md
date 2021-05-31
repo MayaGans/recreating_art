@@ -1,5 +1,5 @@
 # recreating_art
 
-| Original | Recreation |
-| ------ | ------- |
-| ![figures/curves_and_straights_original.png](figures/curves_and_straights_original.png) | ![figures/curves_and_straights.png](figures/curves_and_straights.png) |
+|  | Original | Recreation |
+| ------ | ----| ------- |
+| [Alfredo Hilto Curves and Straight Series](https://www.moma.org/collection/works/205953) | <img src="figures/curves_and_straights_original.png" width="300"/> | <img src="figures/curves_and_straights.png" width="300"/> 
