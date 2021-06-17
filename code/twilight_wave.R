@@ -6,6 +6,9 @@ library(tribble)
 # Twilight Wave
 # Edna Andrade 1973
 
+# Code shamelessly adapted from Miles Ott
+# https://github.com/MilesOtt/recreation_thursday/blob/master/June_17_2021/Edna_Andrade_Twilight_Wave_Animate.Rmd
+
 
 # data for the 12 waves
 # I can play even more code golf here
@@ -36,16 +39,20 @@ make_positions <- function(a,b,c,d,e,color) {
   geom_polygon(data = df, aes(x = x, y = y), fill = color)
 }
 
-ggplot() + 
+plot <- ggplot() + 
   theme_void() +
-  theme(panel.background = element_rect(fill='#EBEBE4', colour='white')) +
+  theme(
+    panel.background = element_rect(fill='#EBEBE4', colour='white')
+  ) +
   pmap(data, make_positions) +
   geom_point(
     data = data.frame(
       x = -0.05,
       y = seq(-0.80,0.80, by = 0.3)
-    ), aes(x = x, y = y), size = 10, color = "#FF9E3F"
+    ), aes(x = x, y = y), size = 3.5, color = "#FF9E3F"
   ) +
   coord_fixed() +
   scale_x_continuous(limits = c(-1,1), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-1,1), expand = c(0, 0))
+
+ggsave("edna.png", plot = plot, width = 2, height = 2)
