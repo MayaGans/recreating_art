@@ -61,14 +61,14 @@ ggplot() +
     panel.background = element_rect(fill='#EBEBE4', colour='white')
   ) +
   pmap(data, make_waves) +
+  pmap(curve_data, make_curves) +
+  coord_fixed() +
   geom_point(
     data = data.frame(
       x = -0.05,
-      y = seq(-0.80,0.80, by = 0.3)
+      y = seq(-0.75, 0.75, by = 0.25)
     ), aes(x = x, y = y), size = 10, color = "#FF9E3F",
   ) +
-  pmap(curve_data, make_curves) +
-  coord_fixed(ylim = c(-0.83,0.83)) +
   scale_x_continuous(limits = c(-1,1), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(-1,1)) +
+  scale_y_continuous(limits = c(-1,1))
   
