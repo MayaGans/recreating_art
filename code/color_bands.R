@@ -15,7 +15,7 @@ colors <- list(
 )
 
 # black square outline used for each of the 8 pieces
-square <- geom_rect(data = data.frame(xmin = 0, ymin = 0, xmax = 1, ymax = -10), 
+square <- geom_rect(data = data.frame(xmin = 0, ymin = 0, xmax = 1, ymax = -1), 
           aes(xmin = xmin,
               xmax = xmax,
               ymin = ymin,
@@ -26,47 +26,40 @@ square <- geom_rect(data = data.frame(xmin = 0, ymin = 0, xmax = 1, ymax = -10),
 # Plot 1
 # ------------------------
 
-left <- data.frame(
-  x_start = seq(from = 0, to = 1, length.out = 32),
-  y_start = 0,
-  x_end = 0,
-  y_end = -seq(from = 0, to = 1, length.out = 32)*10,
-  color = sample(names(colors), 32, replace = TRUE)
-) %>%
-  purrr::pmap(., ~geom_segment(aes(x = ..1, y = ..2, xend = ..3, yend = ..4,color = colors[..5]), size = 3))
+left <- purrr::map2(seq(-0.99,-0.04, length.out = 32), 
+                    sample(colors, replace = TRUE, 32),
+                   ~geom_abline(intercept = .x, slope = 1, size = 3, color = .y))
 
 right <- data.frame(
   x_start = seq(from = 0.5, to = 1, length.out = 22),
   y_start = 0,
   x_end = seq(from = 0.5, to = 1, length.out = 22),
-  y_end = seq(from = -5, to = -10, length.out = 22),
+  y_end = seq(from = -0.5, to = -1, length.out = 22),
   color = sample(names(colors), 22, replace = TRUE)
 ) %>%
-  purrr::pmap(., ~geom_segment(aes(x = ..1, y = ..2, xend = ..3, yend = ..4,color = colors[..5]), size = 3))
+  purrr::pmap(., 
+              ~geom_segment(
+                aes(x = ..1, y = ..2, xend = ..3, yend = ..4,color = colors[..5]), 
+                size = 3))
 
 
 bottom <- purrr::map2(seq(10,500, length.out = 90), 
                       sample(names(colors), 90, replace = TRUE), 
-                      ~geom_point(data = data.frame(x = 0.5, y = -5), 
+                      ~geom_point(data = data.frame(x = 0.5, y = -0.5), 
                                   aes(x,y, color = colors[.y]), 
                                   size = .x))
 outline <- data.frame(
-  x_start = c(0.5,0,1),
-  y_start = c(0,-10,-10),
-  x_end = c(0.5,0.5,0.5),
-  y_end = c(-5,-5,-5)
+  x_start = c(0.5,0.5,0.5),
+  y_start = c(0,-0.5,-0.5),
+  x_end = c(0.5,1,0),
+  y_end = c(-0.5,-1,-1)
 ) %>%
   purrr::pmap(., ~geom_segment(aes(x = ..1, y = ..2, xend = ..3, yend = ..4), size = 3))
 
 
 ggplot() +
-  rev(bottom) +
-  left +
-  right +
-  outline +
-  square +
-  coord_cartesian(clip = "on", ylim=c(-10,0), xlim=c(0,1), expand = FALSE) +
-  theme_void()
+  rev(bottom) + left + right + outline + square +
+  coord_fixed(clip = "on", ylim=c(-1,0), xlim=c(0,1), expand = FALSE) 
 
 # 2
 
