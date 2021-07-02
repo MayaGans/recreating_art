@@ -22,7 +22,9 @@ square <- geom_rect(data = data.frame(xmin = 0, ymin = 0, xmax = 1, ymax = -10),
               ymax = ymax),
           color = "black", size = 3, alpha = 0) 
 
-# 1
+# ------------------------
+# Plot 1
+# ------------------------
 
 left <- data.frame(
   x_start = seq(from = 0, to = 1, length.out = 32),
