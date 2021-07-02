@@ -27,8 +27,8 @@ curve_data <- data.frame(
   color = c("#B0C5BE","#E7EDE6","#B8B3B9","#A5BAB3", "#EBEBE4", "#C7C7C7",
             "#EBEBE4","#C7C7C7","#B8B3B9","#A5BAB3","#B0C5BE","#E7EDE6")
 )
-  
-  
+
+
 
 # -----------------------
 # Functions
@@ -71,4 +71,3 @@ ggplot() +
   ) +
   scale_x_continuous(limits = c(-1,1), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-1,1))
-  
