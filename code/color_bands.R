@@ -14,6 +14,23 @@ colors <- list(
   purple = "#8543A4"
 )
 
+sample_no_repeats <- function(x, size) {
+  l <- length(x)
+  if (l==1) stop("repeats are inevitable with only one selection")
+  ## if size is one, just do a straightforwards sample
+  if (size==1) return(sample(x, 1))
+  ## if size > 1, start with a sample of 1...
+  initial_value <- sample(l, 1)
+  ## ...then use samples of l-1 to accumulate and modulo to keep them in x range
+  ## Since we never add 0 or l to the accumulation, we can never have a repeat
+  x[
+    cumsum(c(initial_value,
+             sample(l-1, size-1, replace = TRUE)
+    )) %% l + 1
+    ]
+}
+
+
 # black square outline used for each of the 8 pieces
 square <- geom_rect(data = data.frame(xmin = 0, ymin = 0, xmax = 1, ymax = -1), 
           aes(xmin = xmin,
@@ -22,29 +39,30 @@ square <- geom_rect(data = data.frame(xmin = 0, ymin = 0, xmax = 1, ymax = -1),
               ymax = ymax),
           color = "black", size = 3, alpha = 0) 
 
+  
 # ------------------------
 # Plot 1
 # ------------------------
 
 left <- purrr::map2(seq(-0.99,-0.04, length.out = 32), 
-                    sample(colors, replace = TRUE, 32),
-                   ~geom_abline(intercept = .x, slope = 1, size = 3, color = .y))
+                    sample_no_repeats(names(colors), 32),
+                   ~geom_abline(intercept = .x, slope = 1, size = 3, color = colors[.y]))
 
 right <- data.frame(
   x_start = seq(from = 0.5, to = 1, length.out = 22),
   y_start = 0,
   x_end = seq(from = 0.5, to = 1, length.out = 22),
   y_end = seq(from = -0.5, to = -1, length.out = 22),
-  color = sample(names(colors), 22, replace = TRUE)
+  color = sample_no_repeats(names(colors), 22)
 ) %>%
   purrr::pmap(., 
               ~geom_segment(
-                aes(x = ..1, y = ..2, xend = ..3, yend = ..4,color = colors[..5]), 
+                aes(x = ..1, y = ..2, xend = ..3, yend = ..4, color = colors[..5]), 
                 size = 3))
 
 
 bottom <- purrr::map2(seq(10,500, length.out = 90), 
-                      sample(names(colors), 90, replace = TRUE), 
+                      sample_no_repeats(names(colors), 90),
                       ~geom_point(data = data.frame(x = 0.5, y = -0.5), 
                                   aes(x,y, color = colors[.y]), 
                                   size = .x))
@@ -59,7 +77,8 @@ outline <- data.frame(
 
 ggplot() +
   rev(bottom) + left + right + outline + square +
-  coord_fixed(clip = "on", ylim=c(-1,0), xlim=c(0,1), expand = FALSE) 
+  coord_fixed(clip = "on", ylim=c(-1,0), xlim=c(0,1), expand = FALSE) +
+  theme_void()
 
 # 2
 
