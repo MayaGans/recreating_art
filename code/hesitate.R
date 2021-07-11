@@ -4,7 +4,7 @@ library(ggforce)
 # https://www.tate.org.uk/art/artworks/riley-hesitate-t04132
 # Bridget Riley
 # Hesitate
-# 1964
+# 2020
 
 ggplot() +
 
@@ -284,6 +284,7 @@ ggplot() +
   geom_ellipse(aes(x0 = 42, y0 = 32, a = 1, b = 0.2, angle = pi), fill = "#D8D6D9", color = "#F1ECE6") +
   geom_ellipse(aes(x0 = 46, y0 = 32, a = 1, b = 0.2, angle = pi), fill = "#D0CED3", color = "#F1ECE6") +
 
+  
   geom_ellipse(aes(x0 = 0,  y0 = 32.4, a = 1, b = 0.2, angle = pi), fill = "#74757A", color = "#F1ECE6") +
   geom_ellipse(aes(x0 = 4,  y0 = 32.4, a = 1, b = 0.2, angle = pi), fill = "#5A5B5F", color = "#F1ECE6") +
   geom_ellipse(aes(x0 = 8,  y0 = 32.4, a = 1, b = 0.2, angle = pi), fill = "#4F4E53", color = "#F1ECE6") +
