@@ -174,7 +174,7 @@ ggplot() +
   geom_ellipse(aes(x0 = 34, y0 = 22, a = 1, b = 1, angle = pi), fill = "#C2C1C6", color = "#F1ECE6") +
   geom_ellipse(aes(x0 = 38, y0 = 22, a = 1, b = 1, angle = pi), fill = "#B2B3B8", color = "#F1ECE6") +
   geom_ellipse(aes(x0 = 42, y0 = 22, a = 1, b = 1, angle = pi), fill = "#9A9BA0", color = "#F1ECE6") +
-  geom_ellipse(aes(x0 = 46, y0 = 22, a = 1, b = 1, angle = pi), fill = "#504F54", color = "#F1ECE6") +
+  geom_ellipse(aes(x0 = 46, y0 = 22, a = 1, b = 1, angle = pi), fill = "#7E7F84", color = "#F1ECE6") +
 
   geom_ellipse(aes(x0 = 0,  y0 = 23.8, a = 1, b = 0.9, angle = pi), fill = "#414143", color = "#F1ECE6") +
   geom_ellipse(aes(x0 = 4,  y0 = 23.8, a = 1, b = 0.9, angle = pi), fill = "#474A4F", color = "#F1ECE6") +
@@ -188,7 +188,7 @@ ggplot() +
   geom_ellipse(aes(x0 = 36, y0 = 23.8, a = 1, b = 0.9, angle = pi), fill = "#C2C1C6", color = "#F1ECE6") +
   geom_ellipse(aes(x0 = 40, y0 = 23.8, a = 1, b = 0.9, angle = pi), fill = "#B2B3B8", color = "#F1ECE6") +
   geom_ellipse(aes(x0 = 44, y0 = 23.8, a = 1, b = 0.9, angle = pi), fill = "#9A9BA0", color = "#F1ECE6") +
-  geom_ellipse(aes(x0 = 48, y0 = 23.8, a = 1, b = 0.9, angle = pi), fill = "#504F54", color = "#F1ECE6") +
+  geom_ellipse(aes(x0 = 48, y0 = 23.8, a = 1, b = 0.9, angle = pi), fill = "#7E7F84", color = "#F1ECE6") +
 
   geom_ellipse(aes(x0 = 2,  y0 = 25.6, a = 1, b = 0.8, angle = pi), fill = "#414143", color = "#F1ECE6") +
   geom_ellipse(aes(x0 = 6,  y0 = 25.6, a = 1, b = 0.8, angle = pi), fill = "#474A4F", color = "#F1ECE6") +
