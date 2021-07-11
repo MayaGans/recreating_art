@@ -30,7 +30,6 @@ sample_no_repeats <- function(x, size) {
     ]
 }
 
-
 # black square outline used for each of the 8 pieces
 square <- geom_rect(data = data.frame(xmin = 0, ymin = 0, xmax = 1, ymax = -1), 
                     aes(xmin = xmin,
@@ -127,14 +126,14 @@ p2 <- ggplot() +
 # Plate 3
 # ------------------------
 
-top_right <- purrr::map2(seq(10,200, length.out = 40), 
-                          c(sample_no_repeats(names(colors), 39), "black"),
+top_right <- purrr::map2(seq(10,150, length.out = 30), 
+                          c(sample_no_repeats(names(colors), 29), "black"),
                          ~geom_point(data = data.frame(x = 1, y = 0), 
                                      aes(x,y, color = ifelse(colors[.y] %in% colors, colors[.y], "black")), 
                                      size = .x))
 
-top_left <- purrr::map2(seq(10,200, length.out = 40), 
-                        c(sample_no_repeats(names(colors), 39), "black"),
+top_left <- purrr::map2(seq(10,150, length.out = 30), 
+                        c(sample_no_repeats(names(colors), 29), "black"),
                          ~geom_point(data = data.frame(x = 0, y = 0), 
                                      aes(x,y, color = ifelse(colors[.y] %in% colors, colors[.y], "black")), 
                                      size = .x))
@@ -160,54 +159,53 @@ p3 <- ggplot() +
 
 right <- purrr::map2(seq(10,200, length.out = 40), 
                          sample_no_repeats(names(colors), 40),
-                         ~geom_point(data = data.frame(x = 1, y = -0.5), 
+                         ~geom_point(data = data.frame(x = 0.5, y = -0.5), 
                                      aes(x,y, color = colors[.y]), 
                                      size = .x))
 
-top_left <- purrr::map2(seq(10,400, length.out = 70), 
-                        sample_no_repeats(names(colors), 70),
-                        ~geom_point(data = data.frame(x = 0, y = 0), 
-                                    aes(x,y, color = colors[.y]), 
-                                    size = .x))
-
-bottom_left <- purrr::map2(seq(10,400, length.out = 70), 
-                      sample_no_repeats(names(colors), 70),
-                      ~geom_point(data = data.frame(x = 0.5, y = -1), 
-                                  aes(x,y, color = colors[.y]), 
-                                  size = .x))
-
-
-
-p41 <- ggplot() +
-  rev(right) +
-  square +
-  geom_vline(xintercept = 0.5, size = 3) +
-  coord_fixed(clip = "on", ylim=c(-1,0), xlim=c(0.5,1), expand = FALSE) +
-  theme_void()
-
-p42 <- ggplot() +
-  rev(top_left) +
-  square +
-  geom_vline(xintercept = 0.5, size = 3) +
-  geom_hline(yintercept = -0.5, size = 3) +
-  coord_fixed(clip = "on", ylim=c(-0.5,0), xlim=c(0,0.5), expand = FALSE) +
-  theme_void()
-
-p43 <- ggplot() +
-  rev(bottom_left) +
-  square +
-  geom_vline(xintercept = 0.5, size = 3) +
-  geom_hline(yintercept = -0.5, size = 3) +
-  coord_fixed(clip = "on", ylim=c(-1,-0.5), xlim=c(0,0.5), expand = FALSE) +
-  theme_void()
-
-lay <- rbind(c(1,3),
-             c(2,3))
-
-p4 <- grid.arrange(grobs = list(p42, p43, p41), 
-             layout_matrix = lay,
-             vp = viewport(x = 0.5, y = 0.5)
+top_left <- purrr::pmap(
+  list(
+    seq(0.02, 0.5, by = 0.02),
+    sample_no_repeats(names(colors), 25)
+  ),
+  ~geom_arc(aes(x0 = 0, y0 = 0, start = pi*0.5, end = pi*2, r = ..1), size = 3, color = colors[[..2]])
 )
+
+bottom_left <- purrr::pmap(
+  list(
+    seq(0.02, 0.5, by = 0.02),
+    sample_no_repeats(names(colors), 25)
+  ),
+  ~geom_arc(aes(x0 = 0.5, y0 = -1, start = pi*1.5, end = pi*2, r = ..1), size = 3, color = colors[[..2]])
+)
+
+p4 <- ggplot() +
+  rev(right) +
+  rev(top_left) +
+  geom_arc(aes(x0 = 0, y0 = 0, start = pi*0.91, end = pi*0.59, r = 0.52), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0, y0 = 0, start = pi*0.88, end = pi*0.62, r = 0.54), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0, y0 = 0, start = pi*0.85, end = pi*0.65, r = 0.56), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0, y0 = 0, start = pi*0.825, end = pi*0.67, r = 0.58), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0, y0 = 0, start = pi*0.81, end = pi*0.69, r = 0.6), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0, y0 = 0, start = pi*0.8, end = pi*0.7, r = 0.62), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0, y0 = 0, start = pi*0.785, end = pi*0.715, r = 0.64), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0, y0 = 0, start = pi*0.77, end = pi*0.73, r = 0.66), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0, y0 = 0, start = pi*0.76, end = pi*0.74, r = 0.68), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  rev(bottom_left) +
+  geom_arc(aes(x0 = 0.5, y0 = -1, start = pi*1.5, end = pi*1.91, r = 0.52), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0.5, y0 = -1, start = pi*1.5, end = pi*1.88, r = 0.54), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0.5, y0 = -1, start = pi*1.5, end = pi*1.85, r = 0.56), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0.5, y0 = -1, start = pi*1.5, end = pi*1.825, r = 0.58), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0.5, y0 = -1, start = pi*1.5, end = pi*1.81, r = 0.6), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0.5, y0 = -1, start = pi*1.5, end = pi*1.8, r = 0.62), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0.5, y0 = -1, start = pi*1.5, end = pi*1.79, r = 0.64), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0.5, y0 = -1, start = pi*1.5, end = pi*1.77, r = 0.66), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  geom_arc(aes(x0 = 0.5, y0 = -1, start = pi*1.5, end = pi*1.76, r = 0.68), size = 3, color = colors[[sample_no_repeats(names(colors), 1)]]) +
+  square +
+  geom_vline(xintercept = 0.5, size = 3) +
+  geom_segment(aes(x = 0, y = -0.5, yend = -0.5, xend = 0.5), size = 3) +
+  coord_fixed(clip = "on", ylim=c(-1,0), xlim=c(0,1), expand = FALSE) +
+  theme_void() 
 
 # ------------------------
 # Plate 5
@@ -235,7 +233,7 @@ bottom_right <- purrr::pmap(
   ~geom_arc(aes(x0 = 0.49, y0 = -1, start = pi*0.01, end = pi*0.6, r = ..1), size = 3, color = colors[[..2]])
 )
 
-ggplot() +
+p5 <- ggplot() +
   # cheat and use circles
   rev(bottom_left) +
   bottom_right + 
@@ -286,7 +284,7 @@ left <- purrr::map2(seq(-2,-0.04, length.out = 70),
                     sample_no_repeats(names(colors), 70),
                     ~geom_abline(intercept = .x, slope = 1, size = 3, color = colors[.y]))
 
-top_right <- purrr::map2(seq(10,150, length.out = 30), 
+top_right <- purrr::map2(seq(10,140, length.out = 30), 
                          sample_no_repeats(names(colors), 30),
                          ~geom_point(data = data.frame(x = 1, y = 0), 
                                      aes(x,y, color = colors[.y]), 
@@ -373,6 +371,6 @@ p8 <- ggplot() +
 
 
 all <- (p1 | p2 | p3 | p4) / (p5 | p6 | p7 | p8) &
-  theme(plot.margin = margin(5,5,5,5))
+  theme(plot.margin = margin(20,20,20,20))
 
 ggsave("color_bands.png", all, width = 14, height = 7)
