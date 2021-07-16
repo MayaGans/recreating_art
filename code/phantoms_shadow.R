@@ -14,42 +14,21 @@ colors <- list(
 # Four Shapes
 # ---------------------------
 
-point_top_right <- function(id, value, x, y) {
-  data.frame(
-    id = id,
-    value = value,
-    x = c(0+x,0.5+x,1+x,1+x),
-    y = c(0+y,0.75+y,1+y,0+y)
-  )
+point_factory <- function(a,b,c,d,e,f,g,h) {
+  function(id, value, x, y) {
+    data.frame(
+      id = id,
+      value = value,
+      x = c(a+x,b+x,c+x,d+x),
+      y = c(e+y,f+y,g+y,h+y)
+    )
+  }
 }
 
-point_top_left <- function(id, value, x, y) {
-  data.frame(
-    id = id,
-    value = value,
-    x = c(0+x,0.5+x,1+x,0+x),
-    y = c(1+y,0.75+y,0+y,0+y)
-  )
-}
-
-point_bottom_right <- function(id, value, x, y) {
-  data.frame(
-    id = id,
-    value = value,
-    x = c(0+x,0.5+x,1+x,1+x),
-    y = c(1+y,0.25+y,0+y,1+y)
-  )
-}
-
-
-point_bottom_left <- function(id, value, x, y) {
-  data.frame(
-    id = id,
-    value = value,
-    x = c(0+x,0+x,0.5+x,1+x),
-    y = c(1+y,0+y,0.25+y,1+y)
-  )
-}
+point_top_right <- point_factory(0,0.5,1,1,0,0.75,1,0)
+point_top_left <- point_factory(0,0.5,1,0,1,0.75,0,0)
+point_bottom_right <- point_factory(0,0.5,1,1,1,0.25,0,1)
+point_bottom_left <- point_factory(0,0,0.5,1,1,0,0.25,1)
 
 # -----------------------------
 # Generative Art
